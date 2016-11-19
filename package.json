@@ -1,0 +1,16 @@
+{
+  "name": "logger-pro",
+  "version": "0.0.1",
+  "description": "Better logging*",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "log",
+    "console",
+    "debug"
+  ],
+  "author": "Alex Arena",
+  "license": "MIT"
+}
