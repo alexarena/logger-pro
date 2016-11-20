@@ -1,5 +1,5 @@
 {
-  "name": "logger-pro",
+  "name": "loggerpro",
   "version": "1.0.0",
   "description": "Logging with colors, file output, timestamps, and object pretty-printing.",
   "main": "app.js",
@@ -9,6 +9,8 @@
   "keywords": [
     "log",
     "console",
+    "colors",
+    "pretty",
     "debug"
   ],
   "author": "Alex Arena",

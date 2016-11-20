@@ -1,29 +1,29 @@
-# logger-pro
+# LoggerPro
 Better logging in Node.<sub>1</sub>
 
 ## Features
 
-🔕 **Disable Logging:** Just call `logger-pro.disable()` and messages will stop being logged.
+🔕 **Disable Logging:** Just call `.disable()` and messages will stop being logged.
 
-🌎**Environmentally Concious:** Logging can be enabled or disabled based on the value of an environment variable.
+🌎 **Environmentally Concious:** Logging can be enabled or disabled based on the value of an environment variable.
 
 🗄**Log to File:** Messages can be sent to a logfile and/or stdout. 
 
 ⌚️ **Timestamps:** Logged messages can include timestamps to let you know when they were sent.
 
-🎨**Colors:** Timestamps are colored when sent to the console.
+🎨 **Colors:** Timestamps are colored when sent to the console.
 
 💄**Pretty-Printed Objects**: JSON objects and arrays are printed in a much more readable way than with plain old `console.log`.
 
 ## Installation
 
-You know the drill. `npm install logger-pro --save` installs logger-pro and adds it as a dependency to your project.
+You know the drill. `npm install loggerpro --save` installs logger-pro and adds it as a dependency to your project.
 
 ## The Basics
 
-Before you do anything else, import the logger-pro module:
+Before you do anything else, import the LoggerPro module:
 
-`var log = require('./logger-pro')`
+`var log = require('./loggerpro')`
 
 **By default, logging is *not* enabled.**
 
@@ -36,7 +36,7 @@ You can enable logging in four(!!!) different ways:
 
 You can disable logging by doing the opposite of the above.
 
-Every option in logger-pro can be customized by the object that you pass when calling `.config()`, here's a sample that includes every property:
+Every option in LoggerPro can be customized by the object that you pass when calling `.config()`, here's a sample that includes every property:
 
 ```js
 log.config({
@@ -59,7 +59,7 @@ log.message('Hello World!')
 log.msg('Hello World!')
 ```
 
-logger-pro includes a special function for logging the value of variables:
+LoggerPro includes a special function for logging the value of variables:
 
 ```js
 var foo = 12
@@ -77,9 +77,9 @@ string bar = Hello!
 
 ## Output to a File
 
-logger-pro will log to a file if `fileout` is set to `true` in your config object. That file is called `debug.log` and it will be created in the directory where your app lives.
+LoggerPro will log to a file if `fileout` is set to `true` in your config object. That file is called `debug.log` and it will be created in the directory where your app lives.
 
-By default, the output from logger-pro will just keep appending itself to that file. If you want to delete that file and start fresh, you can do so by calling `log.delete()`.
+By default, the output from LoggerPro will just keep appending itself to that file. If you want to delete that file and start fresh, you can do so by calling `log.delete()`.
 
 Because it's just a plaintext file, colors aren't shown in `debug.log`.
 
@@ -120,7 +120,7 @@ string bar = Hello
 { make: 'Bentley', model: 'Continental GT', color: 'Blue' }
 ```
 
-Here's how we'd do it using logger-pro:
+Here's how we'd do it using LoggerPro:
 
 ```js
 log.msg('Hello World')
