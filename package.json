@@ -2,7 +2,7 @@
   "name": "loggerpro",
   "version": "1.0.1",
   "description": "Logging with colors, file output, timestamps, and object pretty-printing.",
-  "main": "app.js",
+  "main": "loggerpro.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
