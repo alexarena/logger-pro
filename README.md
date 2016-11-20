@@ -51,7 +51,8 @@ log.config({
 
 Here's how you log a message:
 ```js
-log.message('Hello World!')```
+log.message('Hello World!')
+```
 
 [10x programmers](https://twitter.com/thenatekirby/status/677573473670193152) can use this shorthand, which does the same thing:
 ```js
