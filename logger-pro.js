@@ -26,7 +26,7 @@ module.exports.toggle = function(){
 }
 
 module.exports.config = function(config){
-	if(config.hasOwnProperty('debug')){
+	if(config.hasOwnProperty('log')){
 		debug = config.debug
 	}
 	if(config.hasOwnProperty('showTimestamp')){
