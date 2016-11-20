@@ -34,6 +34,7 @@ You can enable logging in four(!!!) different ways:
 3. `log.toggle() // Only if logging is disabled.`
 4. By setting setting `ENABLE_LOGGING=true` as an environment variable. 
 
+
 You can disable logging by doing the opposite of the above.
 
 Every option in LoggerPro can be customized by the object that you pass when calling `.config()`, here's a sample that includes every property:

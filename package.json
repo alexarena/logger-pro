@@ -1,6 +1,6 @@
 {
   "name": "loggerpro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Logging with colors, file output, timestamps, and object pretty-printing.",
   "main": "app.js",
   "scripts": {
