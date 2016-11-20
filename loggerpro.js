@@ -61,12 +61,11 @@ module.exports.delete = function(){
 	})
 }
 
-
-
 var message = function(message){
 	message = createMessage(message)
 	log(message)
 }
+
 module.exports.message = message
 module.exports.msg = message
 
@@ -91,7 +90,7 @@ function timeStamp(color){
 	if(showTimestamp){
 		var temp = "[" + getDateTime(false) + "] "
 		if(color == true){
-			temp = temp.bold.magenta
+			temp = temp.bold.blue
 		}
 		return temp
 	}
