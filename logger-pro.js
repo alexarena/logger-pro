@@ -1,11 +1,29 @@
+//Dependencies
 var fs = require('fs')
-var date = new Date()
-var filename = 'debug.log'
+var colors = require('colors')
 
-var debug = false
+//Defaults
+var filename = 'debug.log'
 var showTimestamp = false
 var stdout = true
 var fileout = false
+var debug = false
+if(process.env.ENABLE_LOGGING){
+	debug = process.env.ENABLE_LOGGING
+}
+
+module.exports.enable = function(){
+	debug = true
+}
+
+module.exports.disable = function(){
+	debug = false
+}
+
+module.exports.toggle = function(){
+	if(debug == true){debug = false}
+	else{debug = true}
+}
 
 module.exports.config = function(config){
 	if(config.hasOwnProperty('debug')){
@@ -20,13 +38,19 @@ module.exports.config = function(config){
 	if(config.hasOwnProperty('fileout')){
 		fileout = config.fileout
 	}
-
-//	filename = 'debug_' + getDateTime(true) + '.log'
-
 }
 
-module.exports.value = function(variable,name){
+module.exports.val = function(variable,name){
+	var toSTD = ""
+	var toFile = ""
+	toSTD += timeStamp(true)
+	toFile += timeStamp()
 
+	var contents =  typeof(variable) + ' ' + name + ' = ' + variable
+	toSTD += contents
+	toFile += contents
+
+	log({"std":toSTD,"file":toFile})
 }
 
 module.exports.delete = function(){
@@ -41,19 +65,16 @@ module.exports.delete = function(){
 
 var message = function(message){
 	message = createMessage(message)
-	if(debug){
-
-		if(fileout){fs.appendFile(filename, message, function (err) {})}
-		if(stdout){console.log(message)}
-	}
+	log(message)
 }
+module.exports.message = message
+module.exports.msg = message
 
 function createMessage(message){
-	var temp = '';
-	if(showTimestamp){
-		temp = temp + getDateTime(false) + ': '
-	}
-
+	var toSTD = ''
+	var toFile = ''
+	toSTD += timeStamp(true)
+	toFile += timeStamp()
 	if(typeof(message) == 'object'){
 		message = JSON.stringify(message,null,4)
 	}
@@ -61,8 +82,20 @@ function createMessage(message){
 	if(typeof(message) == 'string'){
 		message = message.replace(/\n/g, '\n          ');
 	}
-	temp += message + '\n';
-	return temp
+	toSTD += message
+	toFile += message
+	return {"std":toSTD,"file":toFile}
+}
+
+function timeStamp(color){
+	if(showTimestamp){
+		var temp = "[" + getDateTime(false) + "] "
+		if(color == true){
+			temp = temp.bold.magenta
+		}
+		return temp
+	}
+	return ""
 }
 
 function getDateTime(showDate) {
@@ -95,5 +128,9 @@ function getDateTime(showDate) {
 
 }
 
-module.exports.message = message
-module.exports.msg = message
+function log(message){
+	if(debug){
+		if(fileout){fs.appendFile(filename, message.file+'\n', function (err) {})}
+		if(stdout){console.log(message.std)}
+	}
+}

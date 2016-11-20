@@ -12,5 +12,8 @@
     "debug"
   ],
   "author": "Alex Arena",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
 }
