@@ -8,8 +8,34 @@ var showTimestamp = false
 var stdout = true
 var fileout = false
 var debug = false
+var useEmoji = true
 if(process.env.ENABLE_LOGGING){
 	debug = process.env.ENABLE_LOGGING
+}
+
+var indicators = {"success":"✅  ","info":"ℹ️  ","error":"❗️  ","warn":"⚠️  "}
+
+module.exports.config = function(config){
+
+	if(config.hasOwnProperty('useEmoji')){
+		useEmoji = config.useEmoji
+		if(useEmoji == false){
+			indicators = {"success":"SUCCESS  ","info":"","error":"ERR  ","warn":"WARNING  "}
+		}
+	}
+
+	if(config.hasOwnProperty('log')){
+		debug = config.debug
+	}
+	if(config.hasOwnProperty('showTimestamp')){
+		showTimestamp = config.showTimestamp
+	}
+	if(config.hasOwnProperty('stdout')){
+		stdout = config.stdout
+	}
+	if(config.hasOwnProperty('fileout')){
+		fileout = config.fileout
+	}
 }
 
 module.exports.enable = function(){
@@ -25,25 +51,10 @@ module.exports.toggle = function(){
 	else{debug = true}
 }
 
-module.exports.config = function(config){
-	if(config.hasOwnProperty('log')){
-		debug = config.debug
-	}
-	if(config.hasOwnProperty('showTimestamp')){
-		showTimestamp = config.showTimestamp
-	}
-	if(config.hasOwnProperty('stdout')){
-		stdout = config.stdout
-	}
-	if(config.hasOwnProperty('fileout')){
-		fileout = config.fileout
-	}
-}
-
 module.exports.val = function(variable,name){
 	var toSTD = ""
 	var toFile = ""
-	toSTD += timeStamp(true)
+	toSTD += indicators.info + timeStamp('blue')
 	toFile += timeStamp()
 
 	var contents =  typeof(variable) + ' ' + name + ' = ' + variable
@@ -61,25 +72,48 @@ module.exports.delete = function(){
 	})
 }
 
-var message = function(message){
-	message = createMessage(message)
+var message = function(message,status){
+	message = createMessage(message,status)
 	log(message)
 }
 
 module.exports.message = message
 module.exports.msg = message
 
-function createMessage(message){
+function createMessage(message,status){
 	var toSTD = ''
 	var toFile = ''
-	toSTD += timeStamp(true)
+
+	if(status){
+		if(status.includes("success")){
+			toSTD += indicators.success
+			toFile += indicators.success
+			toSTD += timeStamp('green')
+		}
+		else if(status.includes("err")){
+			toSTD += indicators.error
+			toSTD += timeStamp('red')
+			toFile += indicators.error
+		}
+		else if(status.includes("warn")){
+			toSTD += indicators.warn
+			toSTD += timeStamp('yellow')
+			toFile += indicators.warn
+		}
+	}
+	else{
+		toSTD += indicators.info
+		toSTD += timeStamp('blue')
+		toFile += indicators.info
+	}
+
 	toFile += timeStamp()
 	if(typeof(message) == 'object'){
 		message = JSON.stringify(message,null,4)
 	}
 
 	if(typeof(message) == 'string'){
-		message = message.replace(/\n/g, '\n          ');
+		message = message.replace(/\n/g, '\n              ');
 	}
 	toSTD += message
 	toFile += message
@@ -89,9 +123,21 @@ function createMessage(message){
 function timeStamp(color){
 	if(showTimestamp){
 		var temp = "[" + getDateTime(false) + "] "
-		if(color == true){
-			temp = temp.bold.blue
+		if(typeof(color) == 'string'){
+			if(color.includes('red')){
+				temp = temp.red.bold
+			}
+			if(color.includes('yellow')){
+				temp = temp.yellow.bold
+			}
+			if(color.includes('green')){
+				temp = temp.green.bold
+			}
+			else{
+				temp = temp.blue.bold
+			}
 		}
+
 		return temp
 	}
 	return ""
