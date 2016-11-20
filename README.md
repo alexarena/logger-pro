@@ -56,7 +56,8 @@ log.message('Hello World!')
 
 [10x programmers](https://twitter.com/thenatekirby/status/677573473670193152) can use this shorthand, which does the same thing:
 ```js
-log.msg('Hello World!)```
+log.msg('Hello World!)
+```
 
 logger-pro includes a special function for logging the value of variables:
 
