@@ -3,9 +3,9 @@ Better logging in Node.<sub>1</sub>
 
 ## Features
 
-❗️ **Message Types: ** In addition to the regular ones, you can log success, error, info, and warning messages.
+❗️ **Message Types:** In addition to the regular ones, you can log success, error, info, and warning messages.
 
-✅ **Emoji Log Symbols: ** 👁💖 Emoji.
+✅ **Emoji Log Symbols:** 👁💖 Emoji.
 
 🔕 **Disable Logging:** Just call `.disable()` and messages will stop being logged.
 
@@ -21,7 +21,7 @@ Better logging in Node.<sub>1</sub>
 
 ## Preview
 
-<img src="loggerpro-screen.jpg">
+<img src="http://alexarena.com/loggerpro-screen.jpg">
 
 ## Installation
 
