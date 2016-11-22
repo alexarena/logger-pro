@@ -4,10 +4,10 @@ var colors = require('colors')
 
 //Defaults
 var filename = 'debug.log'
-var showTimestamp = false
+var showTimestamp = true
 var stdout = true
 var fileout = false
-var debug = false
+var debug = true
 var useEmoji = true
 if(process.env.ENABLE_LOGGING){
 	debug = process.env.ENABLE_LOGGING
@@ -54,8 +54,9 @@ module.exports.toggle = function(){
 module.exports.val = function(variable,name){
 	var toSTD = ""
 	var toFile = ""
-	toSTD += indicators.info + timeStamp('blue')
-	toFile += timeStamp()
+	//toSTD += indicators.info + timeStamp('blue')
+	toSTD += "   " + timeStamp('white')
+	toFile += "    " + timeStamp()
 
 	var contents =  typeof(variable) + ' ' + name + ' = ' + variable
 	toSTD += contents
@@ -83,47 +84,94 @@ module.exports.msg = message
 function createMessage(message,status){
 	var toSTD = ''
 	var toFile = ''
+	
+	if(typeof(message) == 'object'){
+		message = JSON.stringify(message,null,4)
+	}
+	if(typeof(message) == 'string'){
+		if(showTimestamp){
+			message = message.replace(/\n/g, '\n              ');
+		}
+		else{
+			message = message.replace(/\n/g, '\n   ');
+		}
+	}
 
 	if(status){
 		if(status.includes("success")){
 			toSTD += indicators.success
 			toFile += indicators.success
 			toSTD += timeStamp('green')
+			toSTD += message.green
 		}
 		else if(status.includes("err")){
 			toSTD += indicators.error
 			toSTD += timeStamp('red')
 			toFile += indicators.error
+			toSTD += message.red
 		}
 		else if(status.includes("warn")){
 			toSTD += indicators.warn
 			toSTD += timeStamp('yellow')
 			toFile += indicators.warn
+			toSTD += message.yellow
+		}
+		else if(status.includes("info")){
+			toSTD += indicators.info
+			toSTD += timeStamp('blue')
+			toFile += indicators.info
+			toSTD += message.blue
 		}
 	}
 	else{
-		toSTD += indicators.info
-		toSTD += timeStamp('blue')
-		toFile += indicators.info
+		toSTD += "   " + timeStamp('white')
+		toSTD += message
 	}
 
 	toFile += timeStamp()
-	if(typeof(message) == 'object'){
-		message = JSON.stringify(message,null,4)
-	}
 
-	if(typeof(message) == 'string'){
-		message = message.replace(/\n/g, '\n              ');
-	}
-	toSTD += message
+	//toSTD += message
 	toFile += message
 	return {"std":toSTD,"file":toFile}
 }
+
+// Call createMessage with a different argument depending on the function being called.
+
+module.exports.warn = function(message){
+	message = createMessage(message,'warn')
+	log(message)
+}
+module.exports.info = function(message){
+	message = createMessage(message,'info')
+	log(message)
+}
+
+var successFunction = function(message){
+	message = createMessage(message,'success')
+	log(message)
+}
+
+module.exports.success = successFunction
+module.exports.suc = successFunction
+
+var errorFunction = function(message){
+	message = createMessage(message,'error')
+	log(message)
+}
+
+module.exports.err = errorFunction
+module.exports.error = errorFunction
+
 
 function timeStamp(color){
 	if(showTimestamp){
 		var temp = "[" + getDateTime(false) + "] "
 		if(typeof(color) == 'string'){
+			
+			if(color.includes('blue')){
+				temp = temp.blue.bold
+			}
+			
 			if(color.includes('red')){
 				temp = temp.red.bold
 			}
@@ -134,7 +182,7 @@ function timeStamp(color){
 				temp = temp.green.bold
 			}
 			else{
-				temp = temp.blue.bold
+				temp = temp.bold
 			}
 		}
 

@@ -3,9 +3,13 @@ Better logging in Node.<sub>1</sub>
 
 ## Features
 
+❗️ **Message Types: ** In addition to the regular ones, you can log success, error, info, and warning messages.
+
+✅ **Emoji Log Symbols: ** 👁💖 Emoji.
+
 🔕 **Disable Logging:** Just call `.disable()` and messages will stop being logged.
 
-🌎 **Environmentally Concious:** Logging can be enabled or disabled based on the value of an environment variable.
+🌎 **Environmentally Conscious:** Logging can be enabled or disabled based on the value of an environment variable.
 
 🗄**Log to File:** Messages can be sent to a logfile and/or stdout. 
 
@@ -14,6 +18,10 @@ Better logging in Node.<sub>1</sub>
 🎨 **Colors:** Timestamps are colored when sent to the console.
 
 💄**Pretty-Printed Objects**: JSON objects and arrays are printed in a much more readable way than with plain old `console.log`.
+
+## Preview
+
+<img src="loggerpro-screen.jpg">
 
 ## Installation
 
@@ -25,17 +33,17 @@ Before you do anything else, import the LoggerPro module:
 
 `var log = require('./loggerpro')`
 
-**By default, logging is *not* enabled.**
+**By default, logging is enabled.**
 
-You can enable logging in four(!!!) different ways:
+You can disable logging in four(!!!) different ways:
 
-1. `log.enable()`
-2. `log.config({log:true})`
-3. `log.toggle() // Only if logging is disabled.`
-4. By setting setting `ENABLE_LOGGING=true` as an environment variable. 
+1. `log.disable()`
+2. `log.config({log:false})`
+3. `log.toggle() // Only if logging is enabled.`
+4. By setting setting `ENABLE_LOGGING=false` as an environment variable. 
 
 
-You can disable logging by doing the opposite of the above.
+You can reenable logging by doing the opposite of the above.
 
 Every option in LoggerPro can be customized by the object that you pass when calling `.config()`, here's a sample that includes every property:
 
@@ -44,7 +52,8 @@ log.config({
   log:true,
   showTimestamp:true,
   stdout:true,
-  fileout:true
+  fileout:true,
+  useEmoji: true
 })
 ```
 
@@ -74,6 +83,31 @@ That example would log:
 ```
 number x = 12
 string bar = Hello!
+```
+
+## Message Types
+
+Custom styling is provided for success, error, info, and warning messages.
+
+Here's how you call each, respectively:
+```js
+log.err('This is an error. ') // log.error also works.
+log.suc('Something succeeded!') //log.success works, too!
+log.info('Something neither good nor bad happened.')
+log.warn('This could be a problem in the future, but isn\'t now.')
+```
+
+The same output can also be achieved by providing an extra argument to a basic message. For example:
+
+```js
+log.msg('This is an error.','error')
+```
+
+By default, these messages are prefixed with a corresponding emoji. If you're on a PC or just aren't any fun, this can be disabled with the following:
+
+```js
+log.config({useEmoji:false})
+
 ```
 
 ## Output to a File
